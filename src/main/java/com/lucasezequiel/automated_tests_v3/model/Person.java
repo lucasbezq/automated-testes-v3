@@ -1,11 +1,10 @@
 package com.lucasezequiel.automated_tests_v3.model;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
 
+@Table(name = "person")
+@Entity
 public class Person implements Serializable {
     private static final long serialVersionUID = 1L;
 
