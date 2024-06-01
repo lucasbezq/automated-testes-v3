@@ -43,13 +43,13 @@ public class PersonService {
 
         logger.info("Updating one person!");
 
-        var entity = repository.findById(person.getId())
+        var personFound = repository.findById(person.getId())
                 .orElseThrow(() -> new ResourceNotFoundException("No records found for this ID!"));
 
-        entity.setFirstName(person.getFirstName());
-        entity.setLastName(person.getLastName());
-        entity.setAddress(person.getAddress());
-        entity.setGender(person.getGender());
+        personFound.setFirstName(person.getFirstName());
+        personFound.setLastName(person.getLastName());
+        personFound.setAddress(person.getAddress());
+        personFound.setGender(person.getGender());
 
         return repository.save(person);
     }
@@ -58,9 +58,9 @@ public class PersonService {
 
         logger.info("Deleting one person!");
 
-        var entity = repository.findById(id)
+        var person = repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("No records found for this ID!"));
 
-        repository.delete(entity);
+        repository.delete(person);
     }
 }

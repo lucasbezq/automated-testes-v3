@@ -1,6 +1,7 @@
 package com.lucasezequiel.automated_tests_v3.model;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
+
 import java.io.Serializable;
 
 @Table(name = "person")
@@ -19,12 +20,32 @@ public class Person implements Serializable {
     private String lastName;
 
     @Column(nullable = false, length = 100)
+    private String email;
+
+    @Column(nullable = false, length = 100)
     private String address;
 
     @Column(nullable = false, length = 6)
     private String gender;
 
     public Person() {}
+
+    public Person(Long id, String firstName, String lastName, String email, String address, String gender) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.address = address;
+        this.gender = gender;
+    }
+
+    public Person(String firstName, String lastName, String email, String address, String gender) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.address = address;
+        this.gender = gender;
+    }
 
     public Long getId() {
         return id;
@@ -64,6 +85,14 @@ public class Person implements Serializable {
 
     public void setGender(String gender) {
         this.gender = gender;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     @Override
