@@ -33,7 +33,7 @@ public class PersonService {
         logger.info("Creating one person!");
         var personFound = repository.findByEmail(person.getEmail());
         if (personFound.isPresent()) {
-            throw new EmailAlreadyExistsException("Person already exists with givem e-mail: " + person.getEmail());
+            throw new EmailAlreadyExistsException("Person already exists with given e-mail: " + person.getEmail());
         }
 
         return repository.save(person);

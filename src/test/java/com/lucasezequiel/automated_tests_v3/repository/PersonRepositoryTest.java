@@ -26,6 +26,77 @@ class PersonRepositoryTest {
                 "ezequiel@gmail.com", "Rio de Janeiro - RJ", "Male");
     }
 
+    @DisplayName("Given Person Object when save then return saved Person")
+    @Test
+    void testGivenPersonObject_WhenSave_ThenReturnSavedPerson() {
+        Person savedPerson = repository.save(person);
+
+        assertNotNull(savedPerson);
+        assertTrue(savedPerson.getId() > 0);
+    }
+
+    @DisplayName("Given Person List when findAll then return Person List")
+    @Test
+    void testGivenPersonList_WhenFindAll_ThenReturnPersonList() {
+        Person person02 = new Person("Elis", "Brauna",
+                "elis@gmail.com", "Rio de Janeiro - RJ", "Male");
+        repository.save(person);
+        repository.save(person02);
+
+        var personList = repository.findAll();
+
+        assertNotNull(personList);
+        assertEquals(2, personList.size());
+    }
+
+    @DisplayName("Given Person Object when findById then return Person Object")
+    @Test
+    void testGivenPersonObject_WhenFindById_ThenReturnPersonObject() {
+        repository.save(person);
+
+        var savedPerson = repository.findById(person.getId()).get();
+
+        assertNotNull(person);
+        assertEquals(person.getId(), savedPerson.getId());
+    }
+
+    @DisplayName("Given Person Object when findByEmail then return Person Object")
+    @Test
+    void testGivenPersonObject_WhenFindByEmail_ThenReturnPersonObject() {
+        repository.save(person);
+
+        var savedPerson = repository.findByEmail(person.getEmail()).get();
+
+        assertNotNull(savedPerson);
+        assertEquals(person.getEmail(), savedPerson.getEmail());
+    }
+
+    @DisplayName("Given Person Object when update email then return updated Person Object")
+    @Test
+    void testGivenPersonList_WhenUpdatePerson_ThenReturnUpdatedPersonObject() {
+        var expectedEmail = "lucas@gmail.com";
+        repository.save(person);
+
+        var savedPerson = repository.findById(person.getId()).get();
+        savedPerson.setEmail(expectedEmail);
+        repository.save(savedPerson);
+
+        assertNotNull(savedPerson);
+        assertEquals(expectedEmail, savedPerson.getEmail());
+    }
+
+    @DisplayName("Given Person Object when delete then remove Person")
+    @Test
+    void testGivenPersonObject_WhenDelete_ThenRemovePerson() {
+        repository.save(person);
+
+        repository.deleteById(person.getId());
+
+        var personOptional = repository.findById(person.getId());
+
+        assertTrue(personOptional.isEmpty());
+    }
+
     @DisplayName("Given firstName and lastName when findByJPQLNamedParameters then return Person")
     @Test
     void testGivenFirstNameAndLastName_WhenFindByJPQLNamedParameters_ThenReturnPerson() {
