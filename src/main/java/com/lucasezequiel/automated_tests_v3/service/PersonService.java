@@ -1,5 +1,6 @@
 package com.lucasezequiel.automated_tests_v3.service;
 
+import com.lucasezequiel.automated_tests_v3.exception.EmailAlreadyExistsException;
 import com.lucasezequiel.automated_tests_v3.exception.ResourceNotFoundException;
 import com.lucasezequiel.automated_tests_v3.model.Person;
 import com.lucasezequiel.automated_tests_v3.repository.PersonRepository;
@@ -18,23 +19,22 @@ public class PersonService {
     private PersonRepository repository;
 
     public List<Person> findAll() {
-
         logger.info("Finding all people!");
-
         return repository.findAll();
     }
 
     public Person findById(Long id) {
-
         logger.info("Finding one person!");
-
         return repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("No records found for this ID!"));
     }
 
     public Person create(Person person) {
-
         logger.info("Creating one person!");
+        var personFound = repository.findByEmail(person.getEmail());
+        if (personFound.isPresent()) {
+            throw new EmailAlreadyExistsException("Person already exists with givem e-mail: " + person.getEmail());
+        }
 
         return repository.save(person);
     }
