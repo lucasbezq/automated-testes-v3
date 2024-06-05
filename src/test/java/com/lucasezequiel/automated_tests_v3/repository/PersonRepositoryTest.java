@@ -39,7 +39,7 @@ class PersonRepositoryTest {
     @Test
     void testGivenPersonList_WhenFindAll_ThenReturnPersonList() {
         Person person02 = new Person("Elis", "Brauna",
-                "elis@gmail.com", "Rio de Janeiro - RJ", "Male");
+                "elis@gmail.com", "Rio de Janeiro - RJ", "Female");
         repository.save(person);
         repository.save(person02);
 
