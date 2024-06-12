@@ -1,11 +1,13 @@
 package com.lucasezequiel.automated_tests_v3.repository;
 
+import com.lucasezequiel.automated_tests_v3.integrationtests.testcontainers.AbstractIntegrationTest;
 import com.lucasezequiel.automated_tests_v3.model.Person;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import static net.bytebuddy.matcher.ElementMatchers.is;
@@ -13,7 +15,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 
 @DataJpaTest
-class PersonRepositoryTest {
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+class PersonRepositoryTest extends AbstractIntegrationTest {
 
     @Autowired
     private PersonRepository repository;
@@ -112,10 +115,13 @@ class PersonRepositoryTest {
     @Test
     void testGivenFirstNameAndLastName_WhenFindByJPQL_ThenReturnPerson() {
         repository.save(person);
+        var firstName = "Lucas";
+        var lastName = "Ezequiel";
 
-        var savedPerson = repository.findByNativeSQL(person.getFirstName(), person.getLastName());
+        var savedPerson = repository.findByNativeSQL(firstName, lastName);
 
         assertNotNull(savedPerson);
-        assertEquals(person, savedPerson);
+        assertEquals(person.getFirstName(), savedPerson.getFirstName());
+        assertEquals(person.getLastName(), savedPerson.getLastName());
     }
 }

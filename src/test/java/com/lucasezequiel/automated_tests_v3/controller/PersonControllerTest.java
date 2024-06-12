@@ -39,7 +39,7 @@ public class PersonControllerTest {
     private Person person;
 
     @BeforeEach
-    void setup() {
+    public void setup() {
         person = new Person("Lucas", "Ezequiel",
                 "ezequiel@gmail.com", "Rio de Janeiro - RJ", "Male");
     }

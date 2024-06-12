@@ -16,7 +16,7 @@ public interface PersonRepository extends JpaRepository<Person, Long> {
     @Query("SELECT p FROM Person p WHERE p.firstName =:firstName AND p.lastName =:lastName")
     Person findByJPQLNamedParameters(@Param("firstName") String firstName, @Param("lastName") String lastName);
 
-    @Query(value = "SELECT * FROM Person p WHERE p.first_name =:firstName AND p.last_name =:lastName", nativeQuery = true)
+    @Query(value = "select * from person p where p.first_name =:firstName and p.last_name =:lastName", nativeQuery = true)
     Person findByNativeSQL(@Param("firstName") String firstName, @Param("lastName") String lastName);
 
 }
